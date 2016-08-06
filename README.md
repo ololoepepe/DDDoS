@@ -1,6 +1,6 @@
 # Configurable Denial-Of-Service prevention library
 
-The extra "D" means it is better than the `ddos` package.
+The extra D means it is better than the ddos package.
 
 ## Example
 

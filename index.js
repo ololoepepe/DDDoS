@@ -9,7 +9,7 @@ function DDDoS(options) {
     options = {};
   }
   this.checkInterval = +options.checkInterval;
-  if (isNaN(checkInterval) || checkInterval <= 0) {
+  if (isNaN(this.checkInterval) || this.checkInterval <= 0) {
     this.checkInterval = 1000; //NOTE: One second.
   }
   this.paths = new Map();
