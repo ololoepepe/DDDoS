@@ -1,0 +1,24 @@
+{
+  "name": "dddos",
+  "version": "0.1.0-a",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ololoepepe/dddos.git"
+  },
+  "keywords": [
+    "ddos",
+    "limit",
+    "rate"
+  ],
+  "author": "Andrey Bogdanov <ololoepepe@gmail.com> (https://ololoepepe.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ololoepepe/dddos/issues"
+  },
+  "homepage": "https://github.com/ololoepepe/dddos"
+}
