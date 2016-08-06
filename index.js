@@ -25,7 +25,7 @@ function DDDoS(options) {
 }
 
 DDDoS.prototype._check = function() {
-  this.paths.forEach((path) => { this.paths.get(path).check(); });
+  this.paths.forEach((path) => { path.check(); });
   this.rules.forEach((rule) => { rule.check(); });
 };
 

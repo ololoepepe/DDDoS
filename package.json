@@ -1,6 +1,6 @@
 {
   "name": "dddos",
-  "version": "0.1.0-b",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
