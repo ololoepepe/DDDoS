@@ -33,11 +33,11 @@ DDDoS.prototype.request = function(ip, path, ddos, next) {
   if (typeof path !== 'string') {
     path = '';
   }
-  let rule = paths.get(path);
+  let rule = this.paths.get(path);
   if (rule) {
     return rule.use(ip, path, ddos, next);
   }
-  rules.some((rule) => {
+  this.rules.some((rule) => {
     let matches = path.match(rule.regexp);
     if (matches) {
       rule.use(ip, path, ddos, next);
