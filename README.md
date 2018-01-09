@@ -4,8 +4,8 @@ The extra D means it is better than the ddos package.
 
 ## Example
 
-```
-/* With Express*/
+```js
+/* With Express */
 
 let expresss = require('express');
 let DDDoS = require('dddos');
@@ -60,7 +60,7 @@ Interval (in milliseconds) to check connections and decrement weights. Default: 
 
 List of rules to apply to each request. Example:
 
-```
+```js
   rules: [
     { /*Allow 4 requests accessing the application API per checkInterval*/
       regexp: "^/api.*",
