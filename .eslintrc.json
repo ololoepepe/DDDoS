@@ -1,0 +1,9 @@
+{
+    "extends": ["xo"],
+    "env": {
+        "node": true
+    },
+    "rules": {
+        "indent": ["error", 2]
+    }
+}

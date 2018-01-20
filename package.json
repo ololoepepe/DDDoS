@@ -1,10 +1,14 @@
 {
   "name": "dddos",
   "version": "0.1.1",
-  "description": "",
+  "description": "Configurable Denial-Of-Service prevention library",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
@@ -15,10 +19,14 @@
     "limit",
     "rate"
   ],
-  "author": "Andrey Bogdanov <ololoepepe@gmail.com> (https://ololoepepe.me)",
+  "author": "Andrey Bogdanov <ololoepepe@gmail.com> (https://ololoepepe.ru)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ololoepepe/dddos/issues"
   },
-  "homepage": "https://github.com/ololoepepe/dddos"
+  "homepage": "https://github.com/ololoepepe/dddos",
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-config-xo": "^0.18.2"
+  }
 }
