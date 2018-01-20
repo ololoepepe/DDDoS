@@ -7,6 +7,26 @@ const DEFAULT_QUEUE_SIZE = 0; // No queue.
 const DEFAULT_ERROR_DATA = 'Not so fast!';
 
 class Rule {
+  static get DEFAULT_WEIGHT() {
+    return DEFAULT_WEIGHT;
+  }
+
+  static get DEFAULT_MAX_WEIGHT() {
+    return DEFAULT_MAX_WEIGHT;
+  }
+
+  static get DEFAULT_ERROR_CODE() {
+    return DEFAULT_ERROR_CODE;
+  }
+
+  static get DEFAULT_QUEUE_SIZE() {
+    return DEFAULT_QUEUE_SIZE;
+  }
+
+  static get DEFAULT_ERROR_DATA() {
+    return DEFAULT_ERROR_DATA;
+  }
+
   constructor(rule = {}, options = {}) {
     if (rule === null) {
       rule = {};

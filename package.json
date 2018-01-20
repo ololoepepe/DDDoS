@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./*.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./tests/*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/ololoepepe/dddos",
   "devDependencies": {
     "eslint": "^4.8.0",
-    "eslint-config-xo": "^0.18.2"
+    "eslint-config-xo": "^0.18.2",
+    "mocha": "^3.4.2"
   }
 }
