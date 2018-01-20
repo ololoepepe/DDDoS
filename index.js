@@ -1,63 +1,83 @@
-const Util = require('util');
+const {isArray} = require('util');
 
 const Rule = require('./rule');
 
-const DEFAULT_RULES = [{ regexp: '.*' }];
+const DEFAULT_CHECK_INTERVAL = 1000; // One second
+const DEFAULT_RULES = [{regexp: '.*'}];
 
-function DDDoS(options) {
-  if (typeof options === 'null' || typeof options === 'undefined') {
-    options = {};
-  }
-  this.checkInterval = +options.checkInterval;
-  if (isNaN(this.checkInterval) || this.checkInterval <= 0) {
-    this.checkInterval = 1000; //NOTE: One second.
-  }
-  this.paths = new Map();
-  this.rules = [];
-  (Util.isArray(options.rules) ? options.rules : DEFAULT_RULES).forEach((rule) => {
-    if (typeof rule.regexp === 'string') {
-      this.rules.push(new Rule(rule));
-    } else if (rule.string) {
-      this.paths.set(rule.string, new Rule(rule));
+class DDDoS {
+  constructor(options = {}) {
+    if (options === null) {
+      options = {};
     }
-  });
-  setInterval(this._check.bind(this), this.checkInterval);
-}
 
-DDDoS.prototype._check = function() {
-  this.paths.forEach((path) => { path.check(); });
-  this.rules.forEach((rule) => { rule.check(); });
-};
+    let checkInterval = Number(options.checkInterval);
+    if (isNaN(checkInterval) || checkInterval <= 0) {
+      checkInterval = DEFAULT_CHECK_INTERVAL;
+    }
+    this.checkInterval = checkInterval;
 
-DDDoS.prototype.request = function(ip, path, ddos, next) {
-  if (typeof path !== 'string') {
-    path = '';
+    this.paths = new Map();
+    this.rules = [];
+
+    const rules = isArray(options.rules) ? options.rules : DEFAULT_RULES;
+    rules.forEach(rule => this._addRule(rule, options));
+
+    setInterval(this._check.bind(this), checkInterval);
   }
-  let rule = this.paths.get(path);
-  if (rule) {
-    return rule.use(ip, path, ddos, next);
-  }
-  this.rules.some((rule) => {
-    let matches = path.match(rule.regexp);
-    if (matches) {
+
+  request(ip, path, ddos, next) {
+    if (typeof path !== 'string') {
+      path = '';
+    }
+
+    const rule = this.paths.get(path);
+
+    if (rule) {
       rule.use(ip, path, ddos, next);
-    }
-    return matches;
-  });
-};
 
-DDDoS.prototype.express = function(ipPropertyName, pathPropertyName) {
-  if (typeof ipPropertyName !== 'string' || !ipPropertyName) {
-    ipPropertyName = 'ip';
+      return;
+    }
+
+    this.rules.some(rule => {
+      const matches = path.match(rule.regexp);
+
+      if (matches) {
+        rule.use(ip, path, ddos, next);
+      }
+
+      return matches;
+    });
   }
-  if (typeof pathPropertyName !== 'string' || !pathPropertyName) {
-    pathPropertyName = 'path';
+
+  express(ipPropertyName, pathPropertyName) {
+    if (typeof ipPropertyName !== 'string' || !ipPropertyName) {
+      ipPropertyName = 'ip';
+    }
+
+    if (typeof pathPropertyName !== 'string' || !pathPropertyName) {
+      pathPropertyName = 'path';
+    }
+
+    return (req, res, next) => {
+      this.request(req[ipPropertyName], req[pathPropertyName], (errorCode, errorData) => {
+        res.status(errorCode).send(errorData);
+      }, next);
+    };
   }
-  return (req, res, next) => {
-    this.request(req[ipPropertyName], req[pathPropertyName], (errorCode, errorData) => {
-      res.status(errorCode).send(errorData);
-    }, next);
-  };
-};
+
+  _addRule(rule, options) {
+    if (typeof rule.regexp === 'string') {
+      this.rules.push(new Rule(rule, options));
+    } else if (typeof rule.string === 'string') {
+      this.paths.set(rule.string, new Rule(rule, options));
+    }
+  }
+
+  _check() {
+    this.paths.forEach(path => path.check());
+    this.rules.forEach(rule => rule.check());
+  }
+}
 
 module.exports = DDDoS;
