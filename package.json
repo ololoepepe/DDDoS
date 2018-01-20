@@ -1,6 +1,6 @@
 {
   "name": "dddos",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Configurable Denial-Of-Service prevention library",
   "main": "index.js",
   "scripts": {
